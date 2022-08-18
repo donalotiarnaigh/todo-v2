@@ -35,16 +35,14 @@ const Item3 = new Item ({
 
 const defaultItems = [Item1, Item2, Item3];
 
-Item.insertMany(defaultItems,function (err){
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("successfully added items");
-  }
-});
+// Item.insertMany(defaultItems,function (err){
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("successfully added items");
+//   }
+// });
 
-
-// Item3.save();
 
 app.get("/", function(req, res) {
 
