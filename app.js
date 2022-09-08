@@ -22,26 +22,26 @@ const itemSchema = new mongoose.Schema({
 const Item = mongoose.model('item', itemSchema);
 
 const Item1 = new Item ({
-  name:'Cook'
+  name:'Welcome to your To-Do List!'
 });
 
 const Item2 = new Item ({
-  name:'Clean'
+  name:'Hit the + button to add a new item'
 });
 
 const Item3 = new Item ({
-  name:'Shower'
+  name:'<<-- Hit this to delete an item'
 });
 
 const defaultItems = [Item1, Item2, Item3];
 
-// Item.insertMany(defaultItems,function (err){
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("successfully added items");
-//   }
-// });
+Item.insertMany(defaultItems,function (err){
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("successfully added items");
+  }
+});
 
 
 app.get("/", function(req, res) {
