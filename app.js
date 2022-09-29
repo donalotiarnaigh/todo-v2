@@ -11,9 +11,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-
-
- mongoose.connect('mongodb://localhost:27017/todolistDB');
+mongoose.connect('mongodb://localhost:27017/todolistDB');
 
 const itemSchema = new mongoose.Schema({
   name: String
@@ -50,6 +48,7 @@ app.get("/", function(req, res) {
           console.log("successfully added items");
         }
       });
+      res.redirect("/");
     } else {
       res.render("list", {listTitle: "Today", newListItems: foundItems});
     }
@@ -60,15 +59,25 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res){
 
-  const item = req.body.newItem;
+const itemName = req.body.newItem;
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+const item = new Item({
+  name: itemName
+});
+
+item.save();
+res.redirect("/");
+});
+
+app.post("/delete", function(req, res){
+  const checkedItemId = req.body.checkbox;
+
+  Item.findByIdAndRemove(checkedItemId, function(err){
+    if (!err) {
+      console.log("successfully deleted checked item");
+      res.redirect("/")
+    }
+    });
 });
 
 app.get("/work", function(req,res){
