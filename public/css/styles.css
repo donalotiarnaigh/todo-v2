@@ -145,3 +145,9 @@ footer {
   text-align: center;
   padding: 20px 0; /* More vertical padding */
 }
+
+.due-date {
+  margin-left: 10px;
+  font-size: 0.8em;
+  color: #666;
+}

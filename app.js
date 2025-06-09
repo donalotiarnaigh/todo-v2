@@ -18,7 +18,8 @@ if (process.env.NODE_ENV !== 'test') {
 
 
 const itemSchema = new mongoose.Schema({
-  name: String
+  name: String,
+  dueDate: Date
 });
 
 const Item = mongoose.model('item', itemSchema);
@@ -72,10 +73,12 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res){
 
 const itemName = req.body.newItem;
+const itemDueDate = req.body.dueDate;
 const listName = req.body.list;
 
 const item = new Item({
-  name: itemName
+  name: itemName,
+  dueDate: itemDueDate || undefined
 });
 
 if (listName === "Today"){

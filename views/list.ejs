@@ -17,6 +17,9 @@
             onchange="this.form.submit()"
           />
           <span><%= item.name %></span>
+          <% if (item.dueDate) { %>
+            <small class="due-date">(<%= new Date(item.dueDate).toLocaleDateString() %>)</small>
+          <% } %>
         </label>
         <input type="hidden" name="listName" value="<%= listTitle %>" />
       </form>
@@ -30,6 +33,10 @@
       name="newItem"
       placeholder="New item"
       autocomplete="off"
+    />
+    <input
+      type="date"
+      name="dueDate"
     />
     <button type="submit" name="list" value="<%= listTitle %>">+</button>
   </form>
