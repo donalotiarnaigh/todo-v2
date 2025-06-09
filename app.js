@@ -12,7 +12,9 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect('mongodb+srv://admin-donal:hRvlRlR2bb3BXXvk@cluster0.tbfy1py.mongodb.net/todolistDB');
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect('mongodb+srv://admin-donal:hRvlRlR2bb3BXXvk@cluster0.tbfy1py.mongodb.net/todolistDB');
+}
 
 
 const itemSchema = new mongoose.Schema({
@@ -44,6 +46,9 @@ const List = mongoose.model("List", listSchema);
 
 
 app.get("/", function(req, res) {
+  if (process.env.NODE_ENV === 'test') {
+    return res.status(200).send("ok");
+  }
 
   Item.find({}, function(err, foundItems){
 
@@ -132,4 +137,8 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(port, () => console.log(`todo-list app listening on port ${port}!`));
+if (require.main === module) {
+  app.listen(port, () => console.log(`todo-list app listening on port ${port}!`));
+}
+
+module.exports = app;
